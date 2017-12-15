@@ -8,6 +8,9 @@ using namespace std;
 
 int main()
 {
-  Object obj();
+  Vector3d v(1,2,3);
+  cout << v << endl;
+  v.normalize();
+  cout << v;
   return 0;
 }
