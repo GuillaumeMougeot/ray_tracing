@@ -4,7 +4,7 @@
 #include <../Eigen/Dense>
 #include <../Eigen/Geometry>
 
-class Object:
+class Object
 {
 public:
   //Constructors
@@ -15,7 +15,7 @@ public:
 
 protected:
   Eigen::Vector3d m_pos;
-  Eigen::Quaternion m_rot;
+  Eigen::Quaterniond m_rot;
 };
 
 #endif
