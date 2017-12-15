@@ -7,18 +7,18 @@ class Ray
 {
 public:
   //Constructors
-  Ray(Eigen::Vector3d start, Eigen::Vector3d end) : m_start(start), m_end(end) {}
+  Ray(Eigen::Vector3d origin, Eigen::Vector3d direction) : m_origin(origin), m_direction(direction) {}
 
   //Accessors
-  Eigen::Vector3d getStart() {return m_start;}
-  Eigen::Vector3d getEnd() {return m_end;}
+  Eigen::Vector3d getOrigin() {return m_origin;}
+  Eigen::Vector3d getDirection() {return m_direction;}
 
-  void setStart(Eigen::Vector3d start) {m_start=start;}
-  void setEnd(Eigen::Vector3d end) {m_end=end;}
+  void setOrigin(Eigen::Vector3d origin) {m_origin=origin;}
+  void setDirection(Eigen::Vector3d direction) {m_direction=direction;}
 
 private:
-    Eigen::Vector3d m_start;
-    Eigen::Vector3d m_end;
+    Eigen::Vector3d m_origin;
+    Eigen::Vector3d m_direction;
 };
 
 #endif

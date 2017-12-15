@@ -15,7 +15,7 @@ public:
     Eigen::Quaterniond rot,
     Eigen::Vector3d id,
     Eigen::Vector3d is
-  ): m_is(is), m_id(id) {}
+  ): Object(pos,rot), m_is(is), m_id(id) {}
 
 private:
     Eigen::Vector3d m_id, m_is;

@@ -1,16 +1,16 @@
-#ifndef PROJECTION_HPP
-#define PROJECTION_HPP
+#ifndef CAMERA_HPP
+#define CAMERA_HPP
 
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
 #include "Object.hpp"
 
-class Projection: public Object
+class Camera: public Object
 {
 public:
   //Constructors
-  Projection(
+  Camera(
     Eigen::Vector3d pos,
     Eigen::Quaterniond rot,
     unsigned int width,
