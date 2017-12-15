@@ -2,6 +2,7 @@
 #define RAYTRACING_HPP
 
 #include <Eigen/Dense>
+#include "CImg/CImg.h"
 
 #include "Camera.hpp"
 #include "Ray.hpp"
@@ -28,7 +29,7 @@ private:
     Camera* m_camera;
     Scene* m_scene;
     int m_image_width, m_image_heigth;
-    Eigen::Matrix<Eigen::Vector3d, m_image_width, m_image_heigth> m_image_matrix;
+    cimg_library::CImg<float> m_image;
     unsigned int m_depth;
     double attenuation;
 

@@ -5,6 +5,7 @@
 
 #include "Object.hpp"
 #include "Ray.hpp"
+#include "Material.hpp"
 
 class Sphere: public PhysicalObject
 {
