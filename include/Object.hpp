@@ -1,8 +1,8 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-#include <../Eigen/Dense>
-#include <../Eigen/Geometry>
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 class Object
 {

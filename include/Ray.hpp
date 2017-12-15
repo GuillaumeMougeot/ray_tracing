@@ -7,7 +7,7 @@ class Ray
 {
 public:
   //Constructors
-  Ray(Eigen::Vector3d start, Eigen::Vector3d end);
+  Ray(Eigen::Vector3d start, Eigen::Vector3d end) : m_start(start), m_end(end) {}
 
   //Accessors
   Eigen::Vector3d getStart() {return m_start;}
