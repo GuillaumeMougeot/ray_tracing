@@ -1,0 +1,24 @@
+#ifndef LIGHT_HPP
+#define LIGHT_HPP
+
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
+
+#include "Object.hpp"
+
+class Light: public Object
+{
+public:
+  //Constructors
+  Light(
+    Eigen::Vector3d pos,
+    Eigen::Quaterniond rot,
+    Eigen::Vector3d id,
+    Eigen::Vector3d is
+  ): m_is(is), m_id(id) {}
+
+private:
+    Eigen::Vector3d m_id, m_is;
+};
+
+#endif

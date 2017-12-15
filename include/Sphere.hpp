@@ -1,10 +1,10 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
-#include <../Eigen/Dense>
+#include <Eigen/Dense>
 #include "Object.hpp"
 
-class Sphere: public Object
+class Sphere: public PhysicalObject
 {
 public:
   Sphere();

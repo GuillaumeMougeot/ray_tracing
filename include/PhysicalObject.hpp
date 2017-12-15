@@ -1,8 +1,8 @@
 #ifndef PHYSICALOBJECT_HPP
 #define PHYSICALOBJECT_HPP
 
-#include <../Eigen/Dense>
-#include <../Eigen/Geometry>
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 #include "Object.hpp"
 #include "Ray.hpp"
