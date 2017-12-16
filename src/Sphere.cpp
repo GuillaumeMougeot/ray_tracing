@@ -3,7 +3,7 @@
 // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
 bool Sphere::IsIntersected(Ray* ray)
 {
-  Eigen::Vector3d d = ray->getOrigin() - m_center
+  Eigen::Vector3d d = ray->getOrigin() - m_center;
   m_d1 = ray->getDirection().dot(d);
   m_discriminant = m_d1*m_d1 - d.squaredNorm() + m_radius*m_radius;
 
@@ -18,5 +18,5 @@ Eigen::Vector3d Sphere::Intersect(Ray* ray)
 
 Eigen::Vector3d Sphere::getNormal(Eigen::Vector3d point)
 {
-  return (point-m_center).normalize();
+  return (point-m_center).normalized();
 }

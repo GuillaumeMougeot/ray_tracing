@@ -23,8 +23,8 @@ public:
 
   //Accessors
   unsigned int getWidth() {return m_width;}
-  unsigned int getHeight() {return m_heigth;}
-  double getNear() {return m_near};
+  unsigned int getHeight() {return m_height;}
+  double getNear() {return m_near;}
   double getFar() {return m_far;}
   double getConversion() {return m_conversion;}
 

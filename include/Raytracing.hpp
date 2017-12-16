@@ -1,7 +1,6 @@
 #ifndef RAYTRACING_HPP
 #define RAYTRACING_HPP
 
-#include <string>
 #include <Eigen/Dense>
 #include "CImg/CImg.h"
 
@@ -14,12 +13,12 @@ class Raytracing
 public:
   //Constructors
   Raytracing(
-    Camera const* camera,
-    Scene const* scene
+    Camera* camera,
+    Scene* scene
   );
 
   // Accessors
-  cimg_library::CImg getImageMatrix() {return m_image;}
+  cimg_library::CImg<double> getImageMatrix() {return m_image;}
 
   // Compute ray tracing
   void ThrowRays(unsigned int depth);
@@ -27,7 +26,7 @@ public:
   friend Eigen::Vector3d product(Eigen::Vector3d v1, Eigen::Vector3d v2);
 
   // Save image
-  void Save(std::string fileName) {m_image.save(fileName);}
+  void Save(const char *const fileName) {m_image.save(fileName);}
 
 private:
     Camera* m_camera;

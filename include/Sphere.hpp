@@ -3,7 +3,7 @@
 
 #include <Eigen/Dense>
 
-#include "Object.hpp"
+#include "PhysicalObject.hpp"
 #include "Ray.hpp"
 #include "Material.hpp"
 
@@ -15,7 +15,7 @@ public:
     Eigen::Quaterniond rot,
     Eigen::Vector3d center,
     double radius,
-    Eigen::Vector3d mat = Material::Default()
+    Material mat = Material::Default()
   ): PhysicalObject(pos, rot, mat), m_radius(radius), m_center(center), m_d1(0), m_discriminant(0) {}
 
   bool IsIntersected(Ray* ray);

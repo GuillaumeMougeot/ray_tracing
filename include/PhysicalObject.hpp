@@ -4,6 +4,7 @@
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
+#include "Material.hpp"
 #include "Object.hpp"
 #include "Ray.hpp"
 
@@ -20,7 +21,7 @@ public:
   //Accessors
   Eigen::Vector3d getPos() {return m_pos;}
   Eigen::Quaterniond getRot() {return m_rot;}
-  Material& getMaterial() {return m_mat;}
+  Material* getMaterial() {return &m_mat;}
 
   //Intersection with a ray
   // return: true if intersection, false otherwise

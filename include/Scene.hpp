@@ -16,17 +16,18 @@ public:
   // Accessors
   unsigned int getNumberOfPhysicalObjects() {return m_physical_objects.size();}
   unsigned int getNumberOfLigths() {return m_lights.size();}
+  Eigen::Vector3d getIa() {return m_ia;}
 
-  PhysicalObject& getPhysicalObject(unsigned int index)
+  PhysicalObject* getPhysicalObject(unsigned int index)
   {
     if (index >= m_physical_objects.size()) {std::cout << "[Error:Scene/getPhysicalObject] Index out of range!" << std::endl;}
-    else {return m_physical_objects[index]}
+    else {return m_physical_objects[index];}
   }
 
-  Light& getLight(unsigned int index)
+  Light* getLight(unsigned int index)
   {
     if (index >= m_lights.size()) {std::cout << "[Error:Scene/getLight] Index out of range!" << std::endl;}
-    else {return m_lights[index]}
+    else {return m_lights[index];}
   }
 
   // Add physical Object

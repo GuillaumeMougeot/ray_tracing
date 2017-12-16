@@ -36,7 +36,7 @@ int main()
   Vector3d l1_id(1,1,1);
   Vector3d l1_is(1,1,1);
 
-  Light l1(l1_rot, l1_pos, l1_id, l1_is);
+  Light l1(l1_pos, l1_rot, l1_id, l1_is);
 
   // Scene definition
   Vector3d scene_ia(0,0,0.1);
@@ -50,7 +50,7 @@ int main()
   Camera cam(cam_pos, cam_rot, 800, 600, 2, 20);
 
   // Ray tracing definition
-  Raytracing raytracing(&camera, &scene);
+  Raytracing raytracing(&cam, &scene);
 
   raytracing.ThrowRays(1);
   raytracing.Save("ray_tracing.png");
