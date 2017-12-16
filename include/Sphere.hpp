@@ -20,6 +20,7 @@ public:
 
   bool IsIntersected(Ray* ray);
   Eigen::Vector3d Intersect(Ray* ray);
+  Eigen::Vector3d getNormal(Eigen::Vector3d point);
 
 private:
   double m_radius;

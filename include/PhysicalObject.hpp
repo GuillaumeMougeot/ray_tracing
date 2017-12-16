@@ -28,6 +28,9 @@ public:
   // Warning: use IsIntersect before to check intersection
   virtual Eigen::Vector3d Intersect(Ray* ray)=0;
 
+  // return: normal in a point:
+  virtual Eigen::Vector3d getNormal(Eigen::Vector3d point)=0;
+
 protected:
   Material m_mat;
 };
