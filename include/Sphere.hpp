@@ -18,7 +18,7 @@ public:
     Eigen::Vector3d mat = Material::Default()
   ): PhysicalObject(pos, rot, mat), m_radius(radius), m_center(center), m_d1(0), m_discriminant(0) {}
 
-  bool IsIntersect(Ray* ray);
+  bool IsIntersected(Ray* ray);
   Eigen::Vector3d Intersect(Ray* ray);
 
 private:

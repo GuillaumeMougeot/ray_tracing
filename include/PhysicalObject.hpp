@@ -23,7 +23,7 @@ public:
 
   //Intersection with a ray
   // return: true if intersection, false otherwise
-  virtual bool IsIntersect(Ray* ray)=0;
+  virtual bool IsIntersected(Ray* ray)=0;
   // return: intersection point
   // Warning: use IsIntersect before to check intersection
   virtual Eigen::Vector3d Intersect(Ray* ray)=0;

@@ -1,7 +1,7 @@
 #include "Sphere.hpp"
 
 // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
-bool Sphere::IsIntersect(Ray* ray)
+bool Sphere::IsIntersected(Ray* ray)
 {
   Eigen::Vector3d d = ray->getOrigin() - m_center
   m_d1 = ray->getDirection().dot(d);
