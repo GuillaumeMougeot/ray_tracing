@@ -17,16 +17,16 @@ using namespace std;
 
 int main()
 {
-  cout << "coucou";
   // Sphere definition
   Quaterniond s1_rot(1,0,0,0);
-  Vector3d s1_pos(10,0,0);
-  Vector3d s1_center(10,0,0);
-  double s1_radius(1);
+  Vector3d s1_pos(5,0,0);
+  Vector3d s1_center(5,0,0);
+  double s1_radius(2);
 
   Vector3d s1_ka(0,0,0);
   Vector3d s1_kd(1,0,0);
-  Vector3d s1_ks(0.5,0.5,0.5);
+  //Vector3d s1_ks(0.5,0.5,0.5);
+  Vector3d s1_ks(0,0,0);
   double s1_n(1);
   Material s1_mat(s1_ka, s1_kd, s1_ks, s1_n);
 
@@ -34,7 +34,7 @@ int main()
 
   // Light definition
   Quaterniond l1_rot(1,0,0,0);
-  Vector3d l1_pos(5,10,0);
+  Vector3d l1_pos(2,10,0);
   Vector3d l1_id(1,1,1);
   Vector3d l1_is(1,1,1);
 
@@ -45,22 +45,25 @@ int main()
 
   Scene scene(scene_ia);
 
+  scene.AddPhysicalObject(&s1);
+  scene.AddLight(&l1);
+
   // Camera definiton
   Quaterniond cam_rot(1,0,0,0);
   Vector3d cam_pos(0,0,0);
 
   Camera cam(cam_pos, cam_rot, 800, 600, 2, 20);
-  cout << "coucou";
+
   // Ray tracing definition
   Raytracing raytracing(&cam, &scene);
-
-  Vector3d origin(0,0,0);
-  Vector3d direction(1,0,0);
-  Ray ray(origin, direction);
-  Vector3d v = raytracing.ThrowRay(&ray, 2);
-  cout << endl << v << endl;
-  // raytracing.ThrowRays(1);
-  // raytracing.Save("ray_tracing.png");
+  //
+  // Vector3d origin(0,0,0);
+  // Vector3d direction(1,0,0);
+  // Ray ray(origin, direction);
+  // Vector3d v = raytracing.ThrowRay(&ray, 2);
+  // cout << endl << v << endl;
+  raytracing.ThrowRays(1);
+  raytracing.Save("ray_tracing.png");
 
   return 0;
 }

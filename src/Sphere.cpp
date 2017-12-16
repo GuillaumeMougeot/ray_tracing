@@ -1,5 +1,4 @@
 #include "Sphere.hpp"
-#include <iostream>
 
 // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
 bool Sphere::IsIntersected(Ray* ray)
@@ -8,7 +7,7 @@ bool Sphere::IsIntersected(Ray* ray)
   m_d1 = ray->getDirection().dot(d);
   m_discriminant = m_d1*m_d1 - d.squaredNorm() + m_radius*m_radius;
 
-  return (m_discriminant > 0);
+  return (m_discriminant > 0 && -m_d1-std::sqrt(m_discriminant)>0);
 }
 
 Eigen::Vector3d Sphere::Intersect(Ray* ray)
