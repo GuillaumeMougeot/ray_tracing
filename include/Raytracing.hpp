@@ -23,6 +23,8 @@ public:
   // Compute ray tracing
   void ThrowRays(unsigned int depth);
 
+  friend Eigen::Vector3d product(Eigen::Vector3d v1, Eigen::Vector3d v2);
+
 private:
     Camera* m_camera;
     Scene* m_scene;
@@ -30,7 +32,7 @@ private:
     cimg_library::CImg<double> m_image;
 
     Eigen::Vector3d ThrowRay(Ray* ray, unsigned int depth);
-    Eigen::Vector3d Phong(Light* light, PhysicalObject* pObj, Ray* ray);
+    Eigen::Vector3d Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection);
 };
 
 #endif

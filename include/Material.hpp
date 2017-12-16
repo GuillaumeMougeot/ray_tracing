@@ -13,6 +13,11 @@ public:
     double n
   ): m_ka(ka), m_kd(kd), m_ks(ks), m_n(n) {}
 
+  Eigen::Vector3d getKa() {return m_ka;}
+  Eigen::Vector3d getKd() {return m_kd;}
+  Eigen::Vector3d getKs() {return m_ks;}
+  double getN() {return m_n;}
+
   static Material Default()
   {
     Eigen::Vector3d v(1,1,1);

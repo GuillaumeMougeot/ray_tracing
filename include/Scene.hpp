@@ -11,7 +11,7 @@ class Scene
 {
 public:
   // Constructors
-  Scene() {}
+  Scene(Eigen::Vector3d ia): m_ia(ia) {}
 
   // Accessors
   unsigned int getNumberOfPhysicalObjects() {return m_physical_objects.size();}
@@ -38,6 +38,7 @@ public:
 private:
     std::vector<PhysicalObject*> m_physical_objects;
     std::vector<Light*> m_lights;
+    Eigen::Vector3d m_ia; // Ambient light
 };
 
 #endif

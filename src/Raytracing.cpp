@@ -11,6 +11,12 @@ Raytracing::Raytracing(Camera const* camera, Scene const* scene)
   m_image = CImg(m_image_width, m_image_heigth,1,3,0);
 }
 
+// Component by component product for Eigen::Vector3d
+Eigen::Vector3d product(Eigen::Vector3d v1, Eigen::Vector3d v2)
+{
+  return Eigen::Vector(v1[0]*v2[0], v1[1]*v2[1], v1[2]*v2[2]);
+}
+
 Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
 {
   // Determine the closest object from ray.origin
@@ -46,7 +52,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
     // compute reflected, transmitted and diffuse colors
     Eigen::Vector3d cr(ThrowRay(rr, depth-1));
     //TODO: transmitted color
-    Eigen::Vector3d cd(0,0,0);
+    Eigen::Vector3d cd = product(m_scene->getPhysicalObject(closestObject)->getMaterial().getKa(), m_ia);
 
     // for all light source compute phong color
     for (unsigned int i = 0; i < m_scene->getNumberOfLigths(); i++)
@@ -64,9 +70,19 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
 
       if(!intercepted)
       {
-        cd += Phong(m_scene->getLight(i), m_scene->getPhysicalObject(closestObject), &rd);
+        cd += Phong(m_scene->getLight(i), m_scene->getPhysicalObject(closestObject), &rd, intersection);
       }
     }
     return cr + cd;
   }
+}
+
+Eigen::Vector3d Raytracing::Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection)
+{
+  Eigen::Vector3d normal = obj->getNormal(intersection);
+  Eigen::Vector3d L = light->getPos()-intersection;
+  double LN = normal.dot(L);
+  Eigen::Vector3d result = product(light->getId(), obj->getKd()) * LN;
+  result += product(light->getIs(), obj->getKs()) * (intersection-ray->getOrigin()).dot(2*LN*normal - L);
+  return result;
 }

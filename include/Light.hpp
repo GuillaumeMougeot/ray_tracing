@@ -17,6 +17,9 @@ public:
     Eigen::Vector3d is
   ): Object(pos,rot), m_is(is), m_id(id) {}
 
+  Eigen::Vector3d getId() {return m_id;}
+  Eigen::Vector3d getIs() {return m_is;}
+
 private:
     Eigen::Vector3d m_id, m_is;
 };
