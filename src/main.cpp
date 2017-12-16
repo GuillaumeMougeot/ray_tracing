@@ -13,6 +13,9 @@ int main()
 {
   unsigned int w(800), h(600);
   CImg<double> img(800,60,1,3,0);
+
+  img(10,10,2) = 256;
+
   img.save("truc.png");
   return 0;
 }

@@ -33,6 +33,7 @@ private:
 
     Eigen::Vector3d ThrowRay(Ray* ray, unsigned int depth);
     Eigen::Vector3d Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection);
+    void FillPixel(unsigned int i,unsigned int j,Eigen::Vector3d& pixel);
 };
 
 #endif

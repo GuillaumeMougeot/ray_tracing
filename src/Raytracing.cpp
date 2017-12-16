@@ -86,3 +86,31 @@ Eigen::Vector3d Raytracing::Phong(Light* light, PhysicalObject* obj, Ray* ray, E
   result += product(light->getIs(), obj->getKs()) * (intersection-ray->getOrigin()).dot(2*LN*normal - L);
   return result;
 }
+
+void Raytracing::FillPixel(unsigned int i,unsigned int j,Eigen::Vector3d& pixel)
+{
+  for (int k = 0; k < 3; k++)
+  {
+    if (pixel[k]>255) {m_image(i, j, k) = 255;}
+    else {m_image(i, j, k) = pixel[k];}
+  }
+}
+
+void Raytracing::ThrowRays(unsigned int depth)
+{
+  Eigen::Vector3d imageOrigin(m_camera->getNear(), m_image_heigth/2, m_image_width/2);
+  Eigen::Vector3d y(0,1,0);
+  Eigen::Vector3d z(0,0,1);
+  for (unsigned int i = 0; i < m_image_heigth; i++)
+  {
+    for (unsigned int j = 0; j < m_image_width; j++)
+    {
+      Eigen::Vector3d rayOrign = imageOrigin + camera->getConversion()*(j*y+i*z);
+      // potential bug: take camera position and rotation into account
+      Eigen::Vector3d rayDirection = rayOrign - camera->getPos();
+      Ray ray(rayOrign, rayDirection);
+      Eigen::Vector3d pixelColor = ThrowRay(&ray, depth);
+      FillPixel(i, j, pixelColor);
+    }
+  }
+}
