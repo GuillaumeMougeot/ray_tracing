@@ -51,8 +51,15 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
     // cout << "depth=" << depth << endl;
     PhysicalObject* closestObject = m_scene->getPhysicalObject(closestObjectIndex);
     // compute refected and tranmitted rays
-    Eigen::Vector3d op = intersection - ray->getOrigin();
-    Ray rr(intersection, 2*op.dot(closestObject->getNormal(intersection))*closestObject->getNormal(intersection) - op);
+    //Eigen::Vector3d op = (intersection - ray->getOrigin()).normalized();
+    //Ray rr(intersection, 2*op.dot(closestObject->getNormal(intersection))*closestObject->getNormal(intersection) - op);
+    Eigen::Vector3d normal = closestObject->getNormal(intersection);
+    Eigen::Vector3d L = (ray->getOrigin()-intersection);
+    L.normalize();
+    double LN = normal.dot(L);
+
+    Ray rr(intersection, 2*LN*normal - L);
+
     //TODO: transmitted Ray
 
     // compute reflected, transmitted and diffuse colors
@@ -63,12 +70,12 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
     // for all light source compute phong color
     for (unsigned int i = 0; i < m_scene->getNumberOfLigths(); i++)
     {
-      Ray rd(intersection, m_scene->getLight(i)->getPos());
+      Ray rd(intersection, m_scene->getLight(i)->getPos()-intersection);
       // check if rd is intercepted
       bool intercepted = false;
       for (unsigned int j = 0; j < m_scene->getNumberOfPhysicalObjects(); j++)
       {
-        if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(ray))
+        if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(&rd))
         {
           intercepted = true;
         }
@@ -76,7 +83,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
 
       if(!intercepted)
       {
-        cd += Phong(m_scene->getLight(i), closestObject, &rd, intersection);
+        cd += Phong(m_scene->getLight(i), closestObject, ray, intersection);
       }
       // cout << "cd " << cd << endl;
     }
@@ -94,9 +101,13 @@ Eigen::Vector3d Raytracing::Phong(Light* light, PhysicalObject* obj, Ray* ray, E
   // cout << "normL" << L.norm() << endl;
   double LN = normal.dot(L);
   // cout << "LN" << LN << endl;
-  Eigen::Vector3d result = product(light->getId(), obj->getMaterial()->getKd()) * LN;
+  Eigen::Vector3d result(0,0,0);
+  if (LN>0) {result += product(light->getId(), obj->getMaterial()->getKd()) * LN;}
   // cout << "result1" << result << endl;
-  result += product(light->getIs(), obj->getMaterial()->getKs()) * std::pow((intersection-ray->getOrigin()).dot(2*LN*normal - L), obj->getMaterial()->getN());
+
+  double RV = (ray->getOrigin()-intersection).dot(2*LN*normal - L);
+
+  if (LN>0 && RV>0) {result += product(light->getIs(), obj->getMaterial()->getKs()) * std::pow(RV, obj->getMaterial()->getN());}
   return result;
 }
 
@@ -113,6 +124,7 @@ void Raytracing::ThrowRays(unsigned int depth)
 {
   double conversion = m_camera->getConversion();
   Eigen::Vector3d imageOrigin(m_camera->getNear(), conversion*m_image_heigth/2, -conversion*m_image_width/2);
+  Eigen::Vector3d x(1,0,0);
   Eigen::Vector3d y(0,1,0);
   Eigen::Vector3d z(0,0,1);
 
@@ -125,7 +137,8 @@ void Raytracing::ThrowRays(unsigned int depth)
     {
       Eigen::Vector3d rayOrign = imageOrigin + conversion*(-(j*y)+(i*z));
       // potential bug: take camera position and rotation into account
-      Eigen::Vector3d rayDirection = rayOrign - m_camera->getPos();
+      //Eigen::Vector3d rayDirection = rayOrign - m_camera->getPos() + x*100;
+      Eigen::Vector3d rayDirection = x;
       Ray ray(rayOrign, rayDirection);
       Eigen::Vector3d pixelColor = ThrowRay(&ray, depth);
       FillPixel(i, j, pixelColor);
