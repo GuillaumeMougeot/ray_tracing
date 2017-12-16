@@ -1,6 +1,7 @@
 #ifndef RAYTRACING_HPP
 #define RAYTRACING_HPP
 
+#include <string>
 #include <Eigen/Dense>
 #include "CImg/CImg.h"
 
@@ -24,6 +25,9 @@ public:
   void ThrowRays(unsigned int depth);
 
   friend Eigen::Vector3d product(Eigen::Vector3d v1, Eigen::Vector3d v2);
+
+  // Save image
+  void Save(std::string fileName) {m_image.save(fileName);}
 
 private:
     Camera* m_camera;
