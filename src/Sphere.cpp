@@ -1,4 +1,5 @@
 #include "Sphere.hpp"
+#include <iostream>
 
 // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
 bool Sphere::IsIntersected(Ray* ray)

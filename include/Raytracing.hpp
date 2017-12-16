@@ -21,6 +21,7 @@ public:
   cimg_library::CImg<double> getImageMatrix() {return m_image;}
 
   // Compute ray tracing
+  Eigen::Vector3d ThrowRay(Ray* ray, unsigned int depth);
   void ThrowRays(unsigned int depth);
 
   friend Eigen::Vector3d product(Eigen::Vector3d v1, Eigen::Vector3d v2);
@@ -34,7 +35,6 @@ private:
     int m_image_width, m_image_heigth;
     cimg_library::CImg<double> m_image;
 
-    Eigen::Vector3d ThrowRay(Ray* ray, unsigned int depth);
     Eigen::Vector3d Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection);
     void FillPixel(unsigned int i,unsigned int j,Eigen::Vector3d& pixel);
 };

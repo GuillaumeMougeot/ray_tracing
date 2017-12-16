@@ -1,5 +1,7 @@
 #include "Raytracing.hpp"
+#include <iostream>
 
+using namespace std;
 using namespace cimg_library;
 
 Raytracing::Raytracing(Camera* camera, Scene* scene)
@@ -40,6 +42,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
   // If there is no intersection: end of recursion
   if (closestDistance == -1 || depth == 0)
   {
+    cout << "no intersection" << endl;
     return Eigen::Vector3d(0,0,0);
   }
   else

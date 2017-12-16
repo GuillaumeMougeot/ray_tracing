@@ -9,6 +9,7 @@
 #include "Sphere.hpp"
 #include "Material.hpp"
 #include "Raytracing.hpp"
+#include "Ray.hpp"
 
 using namespace Eigen;
 using namespace cimg_library;
@@ -16,6 +17,7 @@ using namespace std;
 
 int main()
 {
+  cout << "coucou";
   // Sphere definition
   Quaterniond s1_rot(1,0,0,0);
   Vector3d s1_pos(10,0,0);
@@ -48,12 +50,17 @@ int main()
   Vector3d cam_pos(0,0,0);
 
   Camera cam(cam_pos, cam_rot, 800, 600, 2, 20);
-
+  cout << "coucou";
   // Ray tracing definition
   Raytracing raytracing(&cam, &scene);
 
-  raytracing.ThrowRays(1);
-  raytracing.Save("ray_tracing.png");
+  Vector3d origin(0,0,0);
+  Vector3d direction(1,0,0);
+  Ray ray(origin, direction);
+  Vector3d v = raytracing.ThrowRay(&ray, 2);
+  cout << endl << v << endl;
+  // raytracing.ThrowRays(1);
+  // raytracing.Save("ray_tracing.png");
 
   return 0;
 }
