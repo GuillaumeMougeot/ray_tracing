@@ -75,6 +75,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
       bool intercepted = false;
       for (unsigned int j = 0; j < m_scene->getNumberOfPhysicalObjects(); j++)
       {
+        //
         if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(&rd))
         {
           intercepted = true;
@@ -87,7 +88,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
       }
       // cout << "cd " << cd << endl;
     }
-    return cr + cd;
+    return product(closestObject->getMaterial()->getKs(),cr) + cd;
   }
 }
 
@@ -102,11 +103,12 @@ Eigen::Vector3d Raytracing::Phong(Light* light, PhysicalObject* obj, Ray* ray, E
   double LN = normal.dot(L);
   // cout << "LN" << LN << endl;
   Eigen::Vector3d result(0,0,0);
+  //
   if (LN>0) {result += product(light->getId(), obj->getMaterial()->getKd()) * LN;}
   // cout << "result1" << result << endl;
-
-  double RV = (ray->getOrigin()-intersection).dot(2*LN*normal - L);
-
+  Eigen::Vector3d V = (ray->getOrigin()-intersection).normalized();
+  double RV = V.dot(2*LN*normal - L);
+  //
   if (LN>0 && RV>0) {result += product(light->getIs(), obj->getMaterial()->getKs()) * std::pow(RV, obj->getMaterial()->getN());}
   return result;
 }

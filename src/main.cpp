@@ -26,9 +26,9 @@ int main()
 
   Vector3d s1_ka(0.2,0,0);
   Vector3d s1_kd(1,0,0);
-  Vector3d s1_ks(0.00,0.0,0.0);
+  Vector3d s1_ks(1,1,1);
   //Vector3d s1_ks(0,0,0);
-  double s1_n(1);
+  double s1_n(200);
   Material s1_mat(s1_ka, s1_kd, s1_ks, s1_n);
 
   Sphere s1(s1_pos, s1_rot, s1_center, s1_radius, s1_mat);
@@ -41,25 +41,25 @@ int main()
 
   Vector3d s2_ka(0,0,0.2);
   Vector3d s2_kd(0,0,0.2);
-  Vector3d s2_ks(0,0,0);
+  Vector3d s2_ks(1,1,1);
   //Vector3d s2_ks(0,0,0);
-  double s2_n(1);
+  double s2_n(200);
   Material s2_mat(s2_ka, s2_kd, s2_ks, s2_n);
 
   Sphere s2(s2_pos, s2_rot, s2_center, s2_radius, s2_mat);
 
   // Light definition
   Quaterniond l1_rot(1,0,0,0);
-  Vector3d l1_pos(2,5,0);
+  Vector3d l1_pos(2,20,0);
   Vector3d l1_id(1,1,1);
-  Vector3d l1_is(0,0,0);
+  Vector3d l1_is(1,1,1);
 
   Light l1(l1_pos, l1_rot, l1_id, l1_is);
 
   Quaterniond l2_rot(1,0,0,0);
-  Vector3d l2_pos(2,0,-5);
+  Vector3d l2_pos(2,0,-20);
   Vector3d l2_id(0.3,0.3,0.7);
-  Vector3d l2_is(0,0,0);
+  Vector3d l2_is(1,1,1);
 
   Light l2(l2_pos, l2_rot, l2_id, l2_is);
 
