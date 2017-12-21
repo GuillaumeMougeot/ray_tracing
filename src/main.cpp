@@ -27,7 +27,7 @@ int main()
 
   Vector3d s1_ka(0.2,0,0);
   Vector3d s1_kd(0.6,0,0);
-  Vector3d s1_ks(0.8,0.9,0.9);
+  Vector3d s1_ks(0.7,0.7,0.7);
   //Vector3d s1_ks(0,0,0);
   double s1_n(200);
   Material s1_mat(s1_ka, s1_kd, s1_ks, s1_n);
@@ -42,7 +42,7 @@ int main()
 
   Vector3d s2_ka(0,0,0.2);
   Vector3d s2_kd(0,0,0.6);
-  Vector3d s2_ks(0.9,0.9,0.9);
+  Vector3d s2_ks(0.7,0.7,0.7);
   //Vector3d s2_ks(0,0,0);
   double s2_n(200);
   Material s2_mat(s2_ka, s2_kd, s2_ks, s2_n);
@@ -84,7 +84,7 @@ int main()
 
   scene.AddPhysicalObject(&s1);
   scene.AddPhysicalObject(&s2);
-  scene.AddPhysicalObject(&t1);
+  //scene.AddPhysicalObject(&t1);
   scene.AddLight(&l1);
   scene.AddLight(&l2);
 
@@ -103,7 +103,7 @@ int main()
   // Vector3d v = raytracing.ThrowRay(&ray, 2);
   // cout << endl << v << endl;
   //#pragma omp parallel
-  raytracing.ThrowRays(1);
+  raytracing.ThrowRays(50);
   raytracing.Save("ray_tracing.png");
 
   return 0;
