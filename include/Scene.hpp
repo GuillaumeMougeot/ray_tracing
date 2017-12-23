@@ -20,7 +20,7 @@ public:
 
   PhysicalObject* getPhysicalObject(unsigned int index)
   {
-    if (index >= m_physical_objects.size()) {std::cout << "[Error:Scene/getPhysicalObject] Index out of range!" << std::endl;}
+    if (index >= m_physical_objects.size()) {std::cout << "[Error:Scene/getPhysicalObject] Index out of range! Index = " << index << std::endl;}
     else {return m_physical_objects[index];}
   }
 

@@ -1,7 +1,7 @@
 #include "Raytracing.hpp"
 #include <iostream>
 
-using namespace std;
+// using namespace std;
 using namespace cimg_library;
 
 Raytracing::Raytracing(Camera* camera, Scene* scene)
@@ -23,72 +23,79 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
 {
   // Determine the closest object from ray.origin
   // closestDistance = -1 if no intersection detected
-  double closestDistance = -1;
-  unsigned int closestObjectIndex = 0;
-  Eigen::Vector3d intersection(0,0,0);
-  for (unsigned int i = 0; i < m_scene->getNumberOfPhysicalObjects(); i++)
+  if (depth == 0)
   {
-    if (m_scene->getPhysicalObject(i)->IsIntersected(ray))
-    {
-      intersection = m_scene->getPhysicalObject(i)->Intersect(ray);
-      if (closestDistance < 0 || closestDistance > (intersection-ray->getOrigin()).norm())
-      {
-        closestDistance = (intersection-ray->getOrigin()).norm();
-        closestObjectIndex = i;
-      }
-    }
-  }
-
-  // If there is no intersection: end of recursion
-  if (closestDistance < 0 || depth == 0)
-  {
-    // cout << "no intersection" << endl;
     return Eigen::Vector3d(0,0,0);
   }
   else
   {
-    // cout << "intersection="  << intersection << endl;
-    // cout << "depth=" << depth << endl;
-    PhysicalObject* closestObject = m_scene->getPhysicalObject(closestObjectIndex);
-    // compute refected and tranmitted rays
-    //Eigen::Vector3d op = (intersection - ray->getOrigin()).normalized();
-    //Ray rr(intersection, 2*op.dot(closestObject->getNormal(intersection))*closestObject->getNormal(intersection) - op);
-    Eigen::Vector3d normal = closestObject->getNormal(intersection);
-    Eigen::Vector3d L = (ray->getOrigin()-intersection);
-    L.normalize();
-    double LN = normal.dot(L);
+    double closestDistance = -1;
+    unsigned int closestObjectIndex = 0;
 
-    Ray rr(intersection, 2*LN*normal - L);
-
-    //TODO: transmitted Ray
-
-    // compute reflected, transmitted and diffuse colors
-    Eigen::Vector3d cr(ThrowRay(&rr, depth-1));
-    //TODO: transmitted color
-    Eigen::Vector3d cd = product(closestObject->getMaterial()->getKa(), m_scene->getIa());
-    // cout << "cd " << cd << endl;
-    // for all light source compute phong color
-    for (unsigned int i = 0; i < m_scene->getNumberOfLigths(); i++)
+    for (unsigned int i = 0; i < m_scene->getNumberOfPhysicalObjects(); i++)
     {
-      Ray rd(intersection, m_scene->getLight(i)->getPos()-intersection);
-      // check if rd is intercepted
-      bool intercepted = false;
-      for (unsigned int j = 0; j < m_scene->getNumberOfPhysicalObjects(); j++)
+      if (m_scene->getPhysicalObject(i)->IsIntersected(ray))
       {
-        //
-        if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(&rd))
+        //intersection = m_scene->getPhysicalObject(i)->Intersect(ray);
+        if (closestDistance < 0 || closestDistance > (m_scene->getPhysicalObject(i)->Intersect(ray)-ray->getOrigin()).norm())
         {
-          intercepted = true;
+          closestDistance = (m_scene->getPhysicalObject(i)->Intersect(ray)-ray->getOrigin()).norm();
+          closestObjectIndex = i;
         }
       }
-
-      if(!intercepted)
-      {
-        cd += Phong(m_scene->getLight(i), closestObject, ray, intersection);
-      }
-      // cout << "cd " << cd << endl;
     }
-    return product(closestObject->getMaterial()->getKs(),cr) + cd;
+
+    // If there is no intersection: end of recursion
+    if (closestDistance < 0)
+    {
+      // cout << "no intersection" << endl;
+      return Eigen::Vector3d(0,0,0);
+    }
+    else
+    {
+      // cout << "intersection=" << intersection << endl;
+      // cout << "depth=" << depth << endl;
+      PhysicalObject* closestObject = m_scene->getPhysicalObject(closestObjectIndex);
+      // compute refected and tranmitted rays
+      //Eigen::Vector3d op = (intersection - ray->getOrigin()).normalized();
+      //Ray rr(intersection, 2*op.dot(closestObject->getNormal(intersection))*closestObject->getNormal(intersection) - op);
+      Eigen::Vector3d intersection(m_scene->getPhysicalObject(closestObjectIndex)->Intersect(ray));
+      Eigen::Vector3d normal = closestObject->getNormal(intersection);
+      Eigen::Vector3d L = (ray->getOrigin()-intersection);
+      L.normalize();
+      double LN = normal.dot(L);
+
+      Ray rr(intersection, 2*LN*normal - L);
+
+      //TODO: transmitted Ray
+
+      // compute reflected, transmitted and diffuse colors
+      Eigen::Vector3d cr(ThrowRay(&rr, depth-1));
+      //TODO: transmitted color
+      Eigen::Vector3d cd = product(closestObject->getMaterial()->getKa(), m_scene->getIa());
+      // cout << "cd " << cd << endl;
+      // for all light source compute phong color
+      for (unsigned int i = 0; i < m_scene->getNumberOfLigths(); i++)
+      {
+        Ray rd(intersection, m_scene->getLight(i)->getPos()-intersection);
+        // check if rd is intercepted
+        bool intercepted = false;
+        for (unsigned int j = 0; j < m_scene->getNumberOfPhysicalObjects(); j++)
+        {
+          if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(&rd))
+          {
+            intercepted = true;
+          }
+        }
+
+        if(!intercepted)
+        {
+          cd += Phong(m_scene->getLight(i), closestObject, ray, intersection);
+        }
+        // cout << "cd " << cd << endl;
+      }
+      return product(closestObject->getMaterial()->getKs(),cr) + cd;
+    }
   }
 }
 
@@ -139,15 +146,15 @@ void Raytracing::ThrowRays(unsigned int depth)
     {
       Eigen::Vector3d rayOrign = imageOrigin + conversion*(-(j*y)+(i*z));
       // potential bug: take camera position and rotation into account
-      //Eigen::Vector3d rayDirection = rayOrign - m_camera->getPos() + x*100;
-      Eigen::Vector3d rayDirection = x;
+      Eigen::Vector3d rayDirection = rayOrign - m_camera->getPos() + x*10;
+      //Eigen::Vector3d rayDirection = x;
       Ray ray(rayOrign, rayDirection);
       Eigen::Vector3d pixelColor = ThrowRay(&ray, depth);
       FillPixel(i, j, pixelColor);
 
       displayCount++;
       if (displayCount%displayRatio == 0)
-      {cout << displayCount/displayRatio << "%" << endl;}
+      {std::cout << displayCount/displayRatio << "%" << std::endl;}
     }
   }
 }

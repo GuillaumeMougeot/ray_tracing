@@ -21,30 +21,30 @@ int main()
   // Sphere definition
   // Sphere 1
   Quaterniond s1_rot(1,0,0,0);
-  Vector3d s1_pos(5,0,2);
+  Vector3d s1_pos(5,0,3);
   Vector3d s1_center(s1_pos);
   double s1_radius(2);
 
   Vector3d s1_ka(0.2,0,0);
   Vector3d s1_kd(0.6,0,0);
-  Vector3d s1_ks(0.7,0.7,0.7);
+  Vector3d s1_ks(0.1,0.1,0.1);
   //Vector3d s1_ks(0,0,0);
-  double s1_n(200);
+  double s1_n(3);
   Material s1_mat(s1_ka, s1_kd, s1_ks, s1_n);
 
   Sphere s1(s1_pos, s1_rot, s1_center, s1_radius, s1_mat);
 
   // Sphere 2
   Quaterniond s2_rot(1,0,0,0);
-  Vector3d s2_pos(5,0,-2);
+  Vector3d s2_pos(10,0,2);
   Vector3d s2_center(s2_pos);
   double s2_radius(2);
 
   Vector3d s2_ka(0,0,0.2);
   Vector3d s2_kd(0,0,0.6);
-  Vector3d s2_ks(0.7,0.7,0.7);
+  Vector3d s2_ks(0.2,0.2,0.2);
   //Vector3d s2_ks(0,0,0);
-  double s2_n(200);
+  double s2_n(3);
   Material s2_mat(s2_ka, s2_kd, s2_ks, s2_n);
 
   Sphere s2(s2_pos, s2_rot, s2_center, s2_radius, s2_mat);
@@ -52,11 +52,11 @@ int main()
   // Triangle definition
   Quaterniond t1_rot(1,0,0,0);
   Vector3d t1_pos(5,0,-2);
-  Vector3d t1_v1(8,0,-2), t1_v2(8,0,2), t1_v3(8,2,0);
+  Vector3d t1_v1(8,-1,-2), t1_v2(8,-1,2), t1_v3(8,2,0);
 
   Vector3d t1_ka(0,0.2,0);
   Vector3d t1_kd(0,0.7,0);
-  Vector3d t1_ks(0.9,0.9,0.9);
+  Vector3d t1_ks(0.5,0.5,0.5);
   double t1_n(200);
   Material t1_mat(t1_ka, t1_kd, t1_ks, t1_n);
 
@@ -84,26 +84,27 @@ int main()
 
   scene.AddPhysicalObject(&s1);
   scene.AddPhysicalObject(&s2);
-  //scene.AddPhysicalObject(&t1);
+  scene.AddPhysicalObject(&t1);
   scene.AddLight(&l1);
-  scene.AddLight(&l2);
+  //scene.AddLight(&l2);
 
   // Camera definiton
   Quaterniond cam_rot(1,0,0,0);
   Vector3d cam_pos(0,0,0);
 
-  Camera cam(cam_pos, cam_rot, 800, 600, 2, 20);
+  Camera cam(cam_pos, cam_rot, 800, 600, 0, 20);
 
   // Ray tracing definition
   Raytracing raytracing(&cam, &scene);
-  //
+
+
   // Vector3d origin(0,0,0);
   // Vector3d direction(1,0,0);
   // Ray ray(origin, direction);
-  // Vector3d v = raytracing.ThrowRay(&ray, 2);
+  // Vector3d v = raytracing.ThrowRay(&ray, 1);
   // cout << endl << v << endl;
-  //#pragma omp parallel
-  raytracing.ThrowRays(50);
+  // #pragma omp parallel
+  raytracing.ThrowRays(1);
   raytracing.Save("ray_tracing.png");
 
   return 0;
