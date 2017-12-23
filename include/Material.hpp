@@ -20,7 +20,7 @@ public:
 
   static Material Default()
   {
-    Eigen::Vector3d ka(0.1,0.1,0.1), kd(0.1,0.1,0.1), ks(0,0,0);
+    Eigen::Vector3d ka(0.1,0.1,0.1), kd(0.5,0.5,0.5), ks(0,0,0);
     return Material(ka,kd,ks,1);
   }
 

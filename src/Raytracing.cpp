@@ -88,7 +88,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
         bool intercepted = false;
         for (unsigned int j = 0; j < m_scene->getNumberOfPhysicalObjects(); j++)
         {
-          if (j != closestObjectIndex && m_scene->getPhysicalObject(j)->IsIntersected(&rd))
+          if (m_scene->getPhysicalObject(j)->IsIntersected(&rd) && (rd.getOrigin()-m_scene->getPhysicalObject(j)->Intersect(&rd)).norm() > m_threshold)
           {
             intercepted = true;
           }
