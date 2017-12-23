@@ -11,6 +11,7 @@
 #include "Raytracing.hpp"
 #include "Triangle.hpp"
 #include "Ray.hpp"
+#include "Quad.hpp"
 
 using namespace Eigen;
 using namespace cimg_library;
@@ -21,24 +22,24 @@ int main()
   // Sphere definition
   // Sphere 1
   Quaterniond s1_rot(1,0,0,0);
-  Vector3d s1_pos(5,0,3);
+  Vector3d s1_pos(3,0,3);
   Vector3d s1_center(s1_pos);
-  double s1_radius(2);
+  double s1_radius(1);
 
   Vector3d s1_ka(0.2,0,0);
   Vector3d s1_kd(0.6,0,0);
-  Vector3d s1_ks(0.1,0.1,0.1);
+  Vector3d s1_ks(0.5,0.5,0.5);
   //Vector3d s1_ks(0,0,0);
-  double s1_n(3);
+  double s1_n(30);
   Material s1_mat(s1_ka, s1_kd, s1_ks, s1_n);
 
   Sphere s1(s1_pos, s1_rot, s1_center, s1_radius, s1_mat);
 
   // Sphere 2
   Quaterniond s2_rot(1,0,0,0);
-  Vector3d s2_pos(10,0,2);
+  Vector3d s2_pos(6,0,2);
   Vector3d s2_center(s2_pos);
-  double s2_radius(2);
+  double s2_radius(1);
 
   Vector3d s2_ka(0,0,0.2);
   Vector3d s2_kd(0,0,0.6);
@@ -62,9 +63,16 @@ int main()
 
   Triangle t1(t1_pos, t1_rot, t1_v1, t1_v2, t1_v3, t1_mat);
 
-  // Light definition
+  // Quads definition
+  Quaterniond q1_rot(1,0,0,0);
+  Vector3d q1_pos(10,0,0);
+  Vector3d q1_v1(10,-5,-5), q1_v2(10,-5,5), q1_v3(10,5,5), q1_v4(10,5,-5);
+
+  Quad q1(q1_pos, q1_rot, q1_v1, q1_v2, q1_v3, q1_v4);
+
+  // Lights definition
   Quaterniond l1_rot(1,0,0,0);
-  Vector3d l1_pos(2,20,0);
+  Vector3d l1_pos(2,9.9,0);
   Vector3d l1_id(1,1,1);
   Vector3d l1_is(1,1,1);
 
@@ -85,6 +93,7 @@ int main()
   scene.AddPhysicalObject(&s1);
   scene.AddPhysicalObject(&s2);
   scene.AddPhysicalObject(&t1);
+  scene.AddPhysicalObject(&q1);
   scene.AddLight(&l1);
   //scene.AddLight(&l2);
 
