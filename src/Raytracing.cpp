@@ -11,6 +11,7 @@ Raytracing::Raytracing(Camera* camera, Scene* scene)
   m_image_width = camera->getWidth();
   m_image_heigth = camera->getHeight();
   m_image = CImg<double>(m_image_width, m_image_heigth,1,3,0);
+  m_threshold = 0.0001;
 }
 
 // Component by component product for Eigen::Vector3d
@@ -37,9 +38,10 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
       if (m_scene->getPhysicalObject(i)->IsIntersected(ray))
       {
         //intersection = m_scene->getPhysicalObject(i)->Intersect(ray);
-        if (closestDistance < 0 || closestDistance > (m_scene->getPhysicalObject(i)->Intersect(ray)-ray->getOrigin()).norm())
+        Eigen::Vector3d gap = m_scene->getPhysicalObject(i)->Intersect(ray)-ray->getOrigin();
+        if ((closestDistance < 0 || closestDistance > gap.norm()) && gap.norm() > m_threshold)
         {
-          closestDistance = (m_scene->getPhysicalObject(i)->Intersect(ray)-ray->getOrigin()).norm();
+          closestDistance = gap.norm();
           closestObjectIndex = i;
         }
       }
@@ -65,7 +67,11 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
       L.normalize();
       double LN = normal.dot(L);
 
-      Ray rr(intersection, 2*LN*normal - L);
+      Eigen::Vector3d reflected = 2*LN*normal - L;
+      if (reflected.norm() == 0)
+      {std::cout << "LN:" << LN << std::endl << "normal:" << normal << std::endl << "L" << L << std::endl;}
+
+      Ray rr(intersection, reflected);
 
       //TODO: transmitted Ray
 

@@ -70,6 +70,30 @@ int main()
 
   Quad q1(q1_pos, q1_rot, q1_v1, q1_v2, q1_v3, q1_v4);
 
+  Quaterniond q2_rot(1,0,0,0);
+  Vector3d q2_pos(5,0,-5);
+  Vector3d q2_v1(0,-5,-5), q2_v2(10,-5,-5), q2_v3(10,5,-5), q2_v4(0,5,-5);
+
+  Quad q2(q2_pos, q2_rot, q2_v1, q2_v2, q2_v3, q2_v4);
+
+  Quaterniond q3_rot(1,0,0,0);
+  Vector3d q3_pos(5,0,5);
+  Vector3d q3_v1(10,-5,5), q3_v2(0,-5,5), q3_v3(0,5,5), q3_v4(10,5,5);
+
+  Quad q3(q3_pos, q3_rot, q3_v1, q3_v2, q3_v3, q3_v4);
+
+  Quaterniond q4_rot(1,0,0,0);
+  Vector3d q4_pos(5,5,0);
+  Vector3d q4_v1(10,5,-5), q4_v2(10,5,5), q4_v3(0,5,5), q4_v4(0,5,-5);
+
+  Quad q4(q4_pos, q4_rot, q4_v1, q4_v2, q4_v3, q4_v4);
+
+  Quaterniond q5_rot(1,0,0,0);
+  Vector3d q5_pos(5,-5,0);
+  Vector3d q5_v1(0,-5,-5), q5_v2(0,-5,5), q5_v3(10,-5,5), q5_v4(10,-5,-5);
+
+  Quad q5(q5_pos, q5_rot, q5_v1, q5_v2, q5_v3, q5_v4);
+
   // Lights definition
   Quaterniond l1_rot(1,0,0,0);
   Vector3d l1_pos(2,9.9,0);
@@ -80,8 +104,8 @@ int main()
 
   Quaterniond l2_rot(1,0,0,0);
   Vector3d l2_pos(2,0,-20);
-  Vector3d l2_id(0.3,0.3,0.7);
-  Vector3d l2_is(1,1,1);
+  Vector3d l2_id(0.1,0.1,0.5);
+  Vector3d l2_is(0.2,0.2,0.2);
 
   Light l2(l2_pos, l2_rot, l2_id, l2_is);
 
@@ -94,8 +118,12 @@ int main()
   scene.AddPhysicalObject(&s2);
   scene.AddPhysicalObject(&t1);
   scene.AddPhysicalObject(&q1);
+  scene.AddPhysicalObject(&q2);
+  scene.AddPhysicalObject(&q3);
+  scene.AddPhysicalObject(&q4);
+  scene.AddPhysicalObject(&q5);
   scene.AddLight(&l1);
-  //scene.AddLight(&l2);
+  scene.AddLight(&l2);
 
   // Camera definiton
   Quaterniond cam_rot(1,0,0,0);
@@ -113,7 +141,7 @@ int main()
   // Vector3d v = raytracing.ThrowRay(&ray, 1);
   // cout << endl << v << endl;
   // #pragma omp parallel
-  raytracing.ThrowRays(1);
+  raytracing.ThrowRays(2);
   raytracing.Save("ray_tracing.png");
 
   return 0;

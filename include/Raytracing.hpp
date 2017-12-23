@@ -34,7 +34,8 @@ private:
     Scene* m_scene;
     int m_image_width, m_image_heigth;
     cimg_library::CImg<double> m_image;
-
+    // m_threshold : to not intersecting with itself
+    double m_threshold;
 
     Eigen::Vector3d Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection);
     void FillPixel(unsigned int i,unsigned int j,Eigen::Vector3d& pixel);
