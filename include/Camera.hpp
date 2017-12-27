@@ -18,8 +18,9 @@ public:
     unsigned int width,
     unsigned int height,
     double near,
-    double far
-  ): Object(pos,rot), m_width(width), m_height(height), m_near(near), m_far(far), m_conversion(0.01) {}
+    double far,
+    double conversion
+  ): Object(pos,rot), m_width(width), m_height(height), m_near(near), m_far(far), m_conversion(conversion) {}
 
   //Accessors
   unsigned int getWidth() {return m_width;}

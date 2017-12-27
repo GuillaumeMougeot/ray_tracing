@@ -17,7 +17,23 @@ public:
     Eigen::Vector3d v2,
     Eigen::Vector3d v3,
     Material mat = Material::Default()
-  ): PhysicalObject(pos, rot, mat), m_v1(v1), m_v2(v2), m_v3(v3), m_iu(0), m_ir(0), m_iv(0) {}
+  ): PhysicalObject(pos, rot, mat),
+  m_v1(v1),
+  m_v2(v2),
+  m_v3(v3),
+  m_iu(0),
+  m_ir(0),
+  m_iv(0) {}
+
+  Triangle(
+    Eigen::Vector3d pos,
+    Eigen::Quaterniond rot,
+    Eigen::Vector3d v1,
+    Eigen::Vector3d v2,
+    Eigen::Vector3d v3,
+    Eigen::Vector3d normal,
+    Material mat = Material::Default()
+  );
 
   bool IsIntersected(Ray* ray);
   Eigen::Vector3d Intersect(Ray* ray);

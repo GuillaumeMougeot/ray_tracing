@@ -19,8 +19,6 @@ public:
   ): Object(pos, rot), m_mat(mat) {}
 
   //Accessors
-  Eigen::Vector3d getPos() {return m_pos;}
-  Eigen::Quaterniond getRot() {return m_rot;}
   Material* getMaterial() {return &m_mat;}
 
   //Intersection with a ray
