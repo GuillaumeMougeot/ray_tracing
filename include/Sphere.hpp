@@ -7,6 +7,13 @@
 #include "Ray.hpp"
 #include "Material.hpp"
 
+// * Sphere:
+// Inherits from PhysicalObject. Contains a center and a radius. As it inherits
+// from PhysicalObject we have to override the abstract methods.
+// Here I used formula that described intersection between sphere and half of a
+// straight line. That's why appears two private variables: m_d1 and
+// m_discriminant.
+
 class Sphere: public PhysicalObject
 {
 public:

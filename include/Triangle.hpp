@@ -7,6 +7,11 @@
 #include "Ray.hpp"
 #include "Material.hpp"
 
+// * Triangle:
+// Inherits from PhysicalObject. Contains three vertices m_v1, m_v2 and m_v3.
+// Here I used three private variables to help me for computation: m_iu, m_ir and
+// m_iv.
+
 class Triangle: public PhysicalObject
 {
 public:

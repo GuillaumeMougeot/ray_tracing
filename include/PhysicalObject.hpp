@@ -8,6 +8,18 @@
 #include "Object.hpp"
 #include "Ray.hpp"
 
+// * PhysicalObject:
+// Abstract base class, inherits from Object. Describes behaviour of objects that
+// could be reached by rays. A PhysicalObject have a Material property.
+//
+// Contains three abstract methods:
+//  - bool IsIntersected(Ray* ray)
+//      return: True if this physical object is intersected by ray.
+//  - Eigen::Vector3d Intersect(Ray* ray)
+//      return: intersection point.
+//  - Eigen::Vector3d getNormal(Eigen::Vector3d point)
+//      return: normal of the physical object at the given point.
+
 class PhysicalObject: public Object
 {
 public:

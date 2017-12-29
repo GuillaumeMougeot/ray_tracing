@@ -4,6 +4,11 @@
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
+// Basic object class: define a positon and a rotation
+
+// * Object:
+// Base class. Define only a position and a rotation.
+
 class Object
 {
 public:

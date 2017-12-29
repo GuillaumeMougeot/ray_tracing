@@ -50,17 +50,12 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
     // If there is no intersection: end of recursion
     if (closestDistance < 0)
     {
-      // cout << "no intersection" << endl;
       return Eigen::Vector3d(0,0,0);
     }
     else
     {
-      // cout << "intersection=" << intersection << endl;
-      // cout << "depth=" << depth << endl;
       PhysicalObject* closestObject = m_scene->getPhysicalObject(closestObjectIndex);
-      // compute refected and tranmitted rays
-      //Eigen::Vector3d op = (intersection - ray->getOrigin()).normalized();
-      //Ray rr(intersection, 2*op.dot(closestObject->getNormal(intersection))*closestObject->getNormal(intersection) - op);
+      // Compute refected and tranmitted rays
       Eigen::Vector3d intersection(m_scene->getPhysicalObject(closestObjectIndex)->Intersect(ray));
       Eigen::Vector3d normal = closestObject->getNormal(intersection);
       Eigen::Vector3d L = (ray->getOrigin()-intersection);
@@ -79,7 +74,7 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
       Eigen::Vector3d cr(ThrowRay(&rr, depth-1));
       //TODO: transmitted color
       Eigen::Vector3d cd = product(closestObject->getMaterial()->getKa(), m_scene->getIa());
-      // cout << "cd " << cd << endl;
+
       // for all light source compute phong color
       for (unsigned int i = 0; i < m_scene->getNumberOfLigths(); i++)
       {
@@ -98,7 +93,6 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
         {
           cd += Phong(m_scene->getLight(i), closestObject, ray, intersection);
         }
-        // cout << "cd " << cd << endl;
       }
       return product(closestObject->getMaterial()->getKs(),cr) + cd;
     }
@@ -108,20 +102,14 @@ Eigen::Vector3d Raytracing::ThrowRay(Ray* ray, unsigned int depth)
 Eigen::Vector3d Raytracing::Phong(Light* light, PhysicalObject* obj, Ray* ray, Eigen::Vector3d& intersection)
 {
   Eigen::Vector3d normal = obj->getNormal(intersection);
-  // cout << "normal" << normal << endl;
   Eigen::Vector3d L = (light->getPos()-intersection);
   L.normalize();
-  // cout << "L" << L << endl;
-  // cout << "normL" << L.norm() << endl;
   double LN = normal.dot(L);
-  // cout << "LN" << LN << endl;
   Eigen::Vector3d result(0,0,0);
-  //
+
   if (LN>0) {result += product(light->getId(), obj->getMaterial()->getKd()) * LN;}
-  // cout << "result1" << result << endl;
   Eigen::Vector3d V = (ray->getOrigin()-intersection).normalized();
   double RV = V.dot(2*LN*normal - L);
-  //
   if (LN>0 && RV>0) {result += product(light->getIs(), obj->getMaterial()->getKs()) * std::pow(RV, obj->getMaterial()->getN());}
   return result;
 }

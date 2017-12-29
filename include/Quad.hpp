@@ -3,6 +3,9 @@
 
 #include "Triangle.hpp"
 
+// * Quad:
+// Inherits from Triangle. A quadrangle is described by two Triangles.
+
 class Quad: public PhysicalObject
 {
 public:

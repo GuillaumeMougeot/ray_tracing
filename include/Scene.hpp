@@ -7,6 +7,16 @@
 #include "PhysicalObject.hpp"
 #include "Light.hpp"
 
+// * Scene:
+// A scene object is a description of how PhysicalObject and Lights will appear
+// on screen. Hence a scene is a vector of PhysicalObjects and Lights. As I used
+// polymorphism these vectors have to contains pointers.
+// It seems natural to include m_ia Phong ambiant illumation constant here.
+//
+// Scene contains two useful methods:
+// - AddPhysicalObject
+// - AddLight
+
 class Scene
 {
 public:

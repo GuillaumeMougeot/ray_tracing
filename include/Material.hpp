@@ -3,6 +3,13 @@
 
 #include <Eigen/Dense>
 
+// * Material:
+// Describes material property of PhysicalObject in Phong model. PhysicalObject
+// have:
+//  - m_ka: constant for ambient illumination.
+//  - m_kd: constant for diffuse illumination.
+//  - m_ks and m_n: constants for specular illumination.
+
 class Material
 {
 public:

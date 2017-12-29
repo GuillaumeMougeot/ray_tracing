@@ -4,6 +4,9 @@
 #include <iostream>
 #include <Eigen/Dense>
 
+// * Ray:
+// A ray is described by an origin and a direction.
+
 class Ray
 {
 public:

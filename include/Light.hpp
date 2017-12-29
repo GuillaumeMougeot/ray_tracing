@@ -6,6 +6,10 @@
 
 #include "Object.hpp"
 
+// * Light:
+// Inherits from Object. Here my Light object have only two parameters of Phong
+// model: m_id and m_is. m_ia will be described further in Scene object.
+
 class Light: public Object
 {
 public:

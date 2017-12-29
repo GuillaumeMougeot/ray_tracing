@@ -6,6 +6,12 @@
 
 #include "Object.hpp"
 
+// * Camera:
+// My camera object contains size of output image (m_width and m_height), the near
+// plan where rays will be thrown and far plan where rays would stop. Actually I
+// never used far plan in my algorithm. Camera behaviour and how rays are thrown
+// is description in my core class Raytracing.
+
 // Convention adopted: 1 pixel = 0.01 unit
 
 class Camera: public Object
